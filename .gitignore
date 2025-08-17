@@ -1,0 +1,23 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environment
+.venv/
+venv/
+
+# Data files (large preprocessed datasets)
+data/*.pkl
+
+# Model files (large binaries)
+models/*.pkl
+models/*.bin
+models/*.bin.gz
+
+# Logs and checkpoints
+*.log
+*.ckpt
+
+# IDE files
+.idea/
+*.iml
