@@ -2,6 +2,20 @@ services:
   - type: web
     name: imdb-sentiment-app
     env: python
-    plan: free
     buildCommand: "pip install -r requirements.txt"
-    startCommand: "streamlit run streamlit_app_improved.py --server.port=$PORT --server.address=0.0.0.0"
+    startCommand: "streamlit run streamlit_app_improved.py --server.port $PORT"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+    buildpacks:
+      - python
+      - apt
+
+    # Install system-level packages
+    apt:
+      packages:
+        - build-essential
+        - python3-dev
+        - libatlas-base-dev
+        - gfortran
+        - libfreetype6-dev
