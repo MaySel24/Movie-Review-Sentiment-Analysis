@@ -1,5 +1,7 @@
 # Import necessary libraries
 import os  # For working with file paths and directories
+import tarfile  # For extracting the dataset
+import urllib.request  # For downloading the dataset
 import pandas as pd  # For data manipulation and analysis
 from sklearn.model_selection import train_test_split  # For splitting the dataset into training and testing sets
 import logging  # For logging events and errors
@@ -7,6 +9,31 @@ import logging  # For logging events and errors
 # Set up logging configuration
 logging.basicConfig(level=logging.INFO)  # Set the logging level to INFO
 logger = logging.getLogger(__name__)  # Get the logger instance
+
+# Function to download and extract IMDb dataset if missing
+def download_and_extract_imdb(data_dir="data"):
+    """
+    Downloads and extracts the IMDb dataset if it's not already available.
+
+    Args:
+        data_dir (str): The directory where the dataset should be stored.
+    """
+    url = "http://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz"
+    tgz_path = os.path.join(data_dir, "aclImdb_v1.tar.gz")
+
+    if not os.path.exists(os.path.join(data_dir, "aclImdb")):
+        logger.info("IMDb dataset not found locally. Downloading...")
+        os.makedirs(data_dir, exist_ok=True)
+
+        try:
+            urllib.request.urlretrieve(url, tgz_path)
+            logger.info("Download complete. Extracting...")
+            with tarfile.open(tgz_path, "r:gz") as tar:
+                tar.extractall(path=data_dir)
+            logger.info("Extraction complete.")
+        except Exception as e:
+            logger.error(f"Failed to download or extract IMDb dataset: {e}")
+            raise
 
 # Function to load the IMDb movie review dataset
 def load_imdb_dataset(data_dir="data/aclImdb"):
@@ -108,14 +135,8 @@ if __name__ == '__main__':
     DATA_DIR = os.path.join(PROJECT_ROOT, "data")
     IMDB_DIR = os.path.join(DATA_DIR, "aclImdb")
 
-    # Create data directory if it doesn't exist
-    os.makedirs(DATA_DIR, exist_ok=True)
-
-    # Check if the IMDb dataset exists
-    if not os.path.exists(IMDB_DIR):
-        logger.error(
-            f"IMDb dataset not found at {IMDB_DIR}. Please download and extract the dataset from: http://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz")
-        exit(1)
+    # Ensure dataset is available (download if missing)
+    download_and_extract_imdb(DATA_DIR)
 
     try:
         # Load datasets
