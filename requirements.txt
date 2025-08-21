@@ -1,6 +1,5 @@
---only-binary=:all:
 pip==25.2
-pandas==2.2.2
+pandas==2.2.2 --only-binary pandas
 setuptools==75.1.0
 wheel==0.44.0
 streamlit==1.48.1
