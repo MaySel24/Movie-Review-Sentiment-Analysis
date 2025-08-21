@@ -1,11 +1,4 @@
 # Import necessary libraries
-import nltk
-
-# Download necessary NLTK data files if not already present
-nltk.download('punkt')
-nltk.download('stopwords')
-nltk.download('wordnet')
-
 import streamlit as st  # For building the web application
 import os  # For working with file paths and directories
 import sys

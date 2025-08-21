@@ -14,14 +14,12 @@ logger = logging.getLogger(__name__)  # Get the logger instance
 def download_and_extract_imdb(data_dir="data"):
     """
     Downloads and extracts the IMDb dataset if it's not already available.
-
-    Args:
-        data_dir (str): The directory where the dataset should be stored.
     """
-    url = "http://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz"
+    url = "https://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz"
     tgz_path = os.path.join(data_dir, "aclImdb_v1.tar.gz")
+    imdb_path = os.path.join(data_dir, "aclImdb")
 
-    if not os.path.exists(os.path.join(data_dir, "aclImdb")):
+    if not os.path.exists(imdb_path):
         logger.info("IMDb dataset not found locally. Downloading...")
         os.makedirs(data_dir, exist_ok=True)
 
@@ -34,6 +32,8 @@ def download_and_extract_imdb(data_dir="data"):
         except Exception as e:
             logger.error(f"Failed to download or extract IMDb dataset: {e}")
             raise
+    else:
+        logger.info("IMDb dataset already available. Skipping download.")
 
 # Function to load the IMDb movie review dataset
 def load_imdb_dataset(data_dir="data/aclImdb"):
