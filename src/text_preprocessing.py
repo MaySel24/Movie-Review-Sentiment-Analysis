@@ -1,4 +1,10 @@
 # Import necessary libraries
+import nltk
+
+# Ensure required tokenizers are downloaded
+nltk.download("punkt")
+nltk.download("punkt_tab")
+
 import re  # For regular expressions
 import string  # For string operations
 from nltk.corpus import stopwords  # For stopwords
