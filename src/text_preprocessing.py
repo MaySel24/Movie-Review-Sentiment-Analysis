@@ -30,11 +30,12 @@ except LookupError:
     logger.info("Downloading NLTK punkt...")
     nltk.download("punkt")
 
-try:
+'''try:
     nltk.data.find("tokenizers/punkt_tab")
 except LookupError:
     logger.info("Downloading NLTK punkt_tab...")
     nltk.download("punkt_tab")
+'''
 
 # Define stopwords and lemmatizer
 STOPWORDS = set(stopwords.words("english"))  # Get English stopwords
